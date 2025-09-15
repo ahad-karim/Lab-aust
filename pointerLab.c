@@ -256,6 +256,41 @@ int prob10() {
     }
 }
 
+int prob15(char *str) {
+    int size = 0;
+    for (char *i = str; *i != '\0'; i++) {
+        size++;
+    }
+    
+    char *i = str;
+    char *j = str+size-1;
+    char temp;
+    while (i < j) {
+        temp = *i;
+        *i = *j;
+        *j = temp;
+        i++;
+        j--;
+    }
+}
+
+int prob16(int *num, int *digcount, int *rev) {
+    *digcount = 0;
+    *rev = 0;
+    
+    if (*num == 0) {
+        *digcount = 1;
+        return 0;
+    }
+    
+    while(*num != 0) {
+        int digit = (*num)%10;
+        *rev = (*rev)*10+digit;
+        (*num)/=10;
+        (*digcount)++;
+    }
+}
+
 int main()
 {
     //prob1();
@@ -268,6 +303,25 @@ int main()
     //prob8();
     //prob9();
     //prob10();
+    
+    char str[200];
+    fgets(str, sizeof(str), stdin);
+    
+    for (char *i = str; i < str+sizeof(str); i++) {
+        if (*i == '\n') {
+            *i = '\0';
+            break;
+        }
+    }
+    
+    prob15(str);
+    
+    printf("%s", str);
+    
+    int num, digcount, rev;
+    scanf("%d", &num);
+    prob16(&num, &digcount, &rev);
+    printf("dig: %d, rev: %d", digcount, rev);
 
     return 0;
 }
